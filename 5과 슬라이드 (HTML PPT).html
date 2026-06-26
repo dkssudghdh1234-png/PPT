@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5과 · 얼마나 달라야 하나</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+@font-face{
+  font-family:'GmarketSans';
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+  font-weight:500;font-display:swap;
+}
+@font-face{
+  font-family:'GmarketSans';
+  src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+  font-weight:700;font-display:swap;
+}
+:root{
+  --bg:#F7EBD9;
+  --card:#FFF7E8;
+  --ink:#1B1713;
+  --pink:#E89AA6;
+  --pink-deep:#DE7C8E;
+  --blue:#6E86CE;
+  --green:#A9C284;
+  --orange:#E69E3F;
+  --yellow:#EBC75E;
+  --kor:"Pretendard Variable",Pretendard,sans-serif;
+  --disp:'GmarketSans',"Pretendard Variable",sans-serif;
+  --eng:'Montserrat',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--kor);background:var(--bg);color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── 장식 도형 (표정 친구들) ───────────────── */
+.shape{position:absolute;display:block}
+.eye{position:absolute;width:.13em;height:.13em;border-radius:50%;background:var(--ink)}
+.mouth{position:absolute;background:var(--ink)}
+.m-line{width:.28em;height:.06em;border-radius:1em}
+.m-o{width:.16em;height:.2em;border-radius:50%}
+.m-smile{width:.34em;height:.17em;background:transparent;border:.06em solid var(--ink);border-top:none;border-radius:0 0 1em 1em}
+.m-frown{width:.3em;height:.15em;background:transparent;border:.06em solid var(--ink);border-bottom:none;border-radius:1em 1em 0 0}
+.ast{position:absolute;color:var(--pink-deep)}
+.ast svg{width:100%;height:100%;display:block}
+.float-soft{animation:bob 5.5s ease-in-out infinite alternate}
+.float-soft2{animation:bob 7s ease-in-out infinite alternate-reverse}
+@keyframes bob{from{transform:translateY(0) rotate(var(--rot,0deg))}to{transform:translateY(-1.6vh) rotate(var(--rot,0deg))}}
+.float-big{animation:bobbig 10s ease-in-out infinite alternate}
+.float-big2{animation:bobbig 13s ease-in-out infinite alternate-reverse}
+@keyframes bobbig{from{transform:translateY(1.2vh) rotate(var(--rot,0deg))}to{transform:translateY(-3.6vh) rotate(var(--rot,0deg))}}
+
+/* ── 데크 ─────────────────────────────────── */
+.deck{position:relative;z-index:1;height:100dvh}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  padding:clamp(20px,5vw,70px) clamp(22px,7vw,104px) clamp(76px,11vh,120px);
+  opacity:0;visibility:hidden;transform:translateY(18px);
+  transition:opacity .5s ease,transform .5s ease,visibility 0s linear .5s;
+  overflow:hidden;
+}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .55s ease,transform .55s ease}
+.slide .rv{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.slide.active .rv{opacity:1;transform:none}
+.slide.active [data-d="1"]{transition-delay:.07s}
+.slide.active [data-d="2"]{transition-delay:.16s}
+.slide.active [data-d="3"]{transition-delay:.25s}
+.slide.active [data-d="4"]{transition-delay:.34s}
+.slide.active [data-d="5"]{transition-delay:.43s}
+.slide.active [data-d="6"]{transition-delay:.52s}
+.slide.active [data-d="7"]{transition-delay:.61s}
+.inner{position:relative;z-index:2;width:100%;display:flex;flex-direction:column;align-items:center}
+
+/* ── 타이포 ───────────────────────────────── */
+.chiplabel{
+  display:inline-block;background:var(--blue);color:#fff;
+  font-family:var(--eng);font-weight:700;font-size:clamp(10px,1.3vw,14px);letter-spacing:.18em;
+  padding:.55em 1.1em;border-radius:6px;text-transform:uppercase;
+  box-shadow:3px 3px 0 var(--ink);
+  margin-bottom:clamp(16px,3vh,30px);
+}
+.chiplabel.k{font-family:var(--disp);letter-spacing:.1em}
+h1.hero{font-family:var(--disp);font-weight:700;font-size:clamp(40px,8.6vw,104px);line-height:1.08;letter-spacing:-.01em}
+h1.hero .pink{color:var(--pink)}
+h2.title{font-family:var(--disp);font-weight:700;font-size:clamp(24px,4.4vw,48px);line-height:1.16;margin-bottom:clamp(16px,3.4vh,34px)}
+h2.title .pink{color:var(--pink-deep)}
+.sub{font-size:clamp(14px,1.9vw,19px);color:#5b5247;font-weight:600}
+.smallquote{
+  display:flex;gap:.8em;text-align:left;align-items:flex-start;
+  border-left:3px solid var(--ink);padding-left:1em;
+  font-size:clamp(12.5px,1.6vw,16px);color:#4d463c;max-width:560px;line-height:1.6;
+}
+
+/* ── 카드 공통 (플랫 + 하드섀도) ───────────── */
+.flatcard{
+  background:var(--card);border:2px solid var(--ink);border-radius:16px;
+  box-shadow:5px 5px 0 var(--ink);
+}
+
+/* 목차 */
+.toc{display:grid;gap:clamp(8px,1.4vh,13px);width:100%;max-width:860px}
+.toc-item{
+  display:flex;align-items:center;gap:clamp(12px,1.8vw,20px);text-align:left;
+  padding:clamp(10px,1.7vh,15px) clamp(16px,2.2vw,24px);
+  font-size:clamp(14.5px,2vw,20px);font-weight:700;
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.toc-item:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.toc-num{
+  font-family:var(--eng);font-weight:800;font-size:clamp(11px,1.4vw,14px);color:#fff;
+  width:2.1em;height:2.1em;border-radius:50%;display:grid;place-items:center;flex:0 0 auto;
+  border:2px solid var(--ink);
+}
+.toc-item small{margin-left:auto;color:#776c5d;font-weight:600;font-size:.72em;white-space:nowrap}
+
+/* 성경 본문 */
+.scripture{width:100%;max-width:940px;text-align:left}
+.scripture .v{
+  display:flex;gap:clamp(10px,1.5vw,16px);
+  font-size:clamp(15.5px,2.15vw,22px);line-height:1.74;font-weight:600;color:#2e2820;
+  margin-bottom:clamp(8px,1.5vh,14px);
+}
+.scripture .vn{
+  font-family:var(--eng);font-weight:800;font-size:.66em;line-height:2.7;color:var(--blue);min-width:1.5em;text-align:right;
+}
+mark{background:linear-gradient(0deg,#F4CBD3 0%,#F4CBD3 100%);color:inherit;border-radius:.3em;padding:.03em .18em;box-shadow:0 2px 0 var(--pink-deep)}
+mark.y{background:#F2DFA8;box-shadow:0 2px 0 var(--orange)}
+
+/* 표 */
+.tbl{width:100%;border-collapse:separate;border-spacing:0;font-size:clamp(12px,1.62vw,17px);text-align:left}
+.tbl th,.tbl td{padding:clamp(9px,1.6vh,15px) clamp(11px,1.7vw,20px);vertical-align:top;line-height:1.5;border-bottom:2px solid #E5D7BE}
+.tbl thead th{
+  font-family:var(--disp);font-weight:700;font-size:.84em;letter-spacing:.06em;
+  color:#fff;background:var(--ink);
+}
+.tbl thead th:first-child{border-radius:12px 0 0 0}
+.tbl thead th:last-child{border-radius:0 12px 0 0}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl td:first-child{font-family:var(--eng);font-weight:800;white-space:nowrap;color:var(--ink)}
+.tag{
+  display:inline-block;font-family:var(--kor);font-size:.7em;font-weight:800;color:#fff;
+  padding:.22em .6em;border-radius:99px;border:1.5px solid var(--ink);margin-top:.35em;
+}
+.tag.past{background:var(--orange)}
+.tag.now{background:var(--pink-deep)}
+
+/* 단락 구분 표 — 강조형 */
+.tbl4 tbody tr:nth-child(even){background:#FBF1DC}
+.tbl4 td{border-bottom:2px solid #E9DABF}
+.vbadge{
+  display:inline-block;font-family:var(--eng);font-weight:800;font-size:.92em;color:#fff;
+  padding:.32em .7em;border-radius:9px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);
+  white-space:nowrap;
+}
+.tbl4 .ttl{font-family:var(--disp);font-weight:700;font-size:clamp(14px,1.95vw,20px);line-height:1.4}
+.tbl4 .desc{color:#5f564a;font-weight:500;font-size:.94em}
+
+/* 단락 구분 — 본문 풀텍스트 분할 (큼직한 카드형) */
+.parsed{width:100%;max-width:1040px;text-align:left;display:grid;gap:clamp(12px,2vh,20px)}
+.pgroup{background:var(--card);border:2px solid var(--ink);border-radius:16px;box-shadow:5px 5px 0 var(--ink);border-left-width:10px;overflow:hidden}
+.pgroup .phead{display:flex;align-items:center;gap:clamp(10px,1.6vw,18px);padding:clamp(10px,1.7vh,15px) clamp(16px,2.2vw,26px) 0}
+.pgroup .pttl{font-family:var(--disp);font-weight:700;font-size:clamp(17px,2.5vw,28px);line-height:1.2}
+.pgroup .ptext{font-size:clamp(15px,2vw,21px);line-height:1.7;font-weight:600;color:#2e2820;padding:clamp(8px,1.4vh,12px) clamp(16px,2.2vw,26px) clamp(13px,2vh,18px)}
+.pgroup .ptext .vn{font-family:var(--eng);font-weight:800;font-size:.66em;color:var(--blue);margin:0 .3em 0 .15em;vertical-align:.15em}
+.pgroup .ptext .vn:first-child{margin-left:0}
+.pgroup .vbadge{font-size:clamp(13px,1.7vw,18px)}
+
+/* 번호 리스트 */
+.numlist{display:grid;gap:clamp(10px,1.9vh,17px);width:auto;max-width:940px;text-align:left;list-style:none;margin-inline:auto;justify-items:start}
+.numlist li{display:flex;gap:clamp(12px,1.8vw,18px);align-items:flex-start;font-size:clamp(15px,2.1vw,21px);line-height:1.55;font-weight:700}
+.numlist .n{
+  flex:0 0 auto;width:1.65em;height:1.65em;margin-top:.05em;border-radius:50%;
+  background:var(--pink-deep);color:#fff;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);
+  display:grid;place-items:center;font-family:var(--eng);font-weight:800;font-size:.82em;
+}
+.numlist small{display:block;font-size:.82em;font-weight:600;color:#776c5d;margin-top:.25em}
+
+/* 불릿 */
+.feature{display:grid;gap:clamp(10px,1.8vh,16px);width:100%;max-width:920px;text-align:left}
+.feature li{list-style:none;display:flex;gap:clamp(11px,1.7vw,17px);align-items:flex-start;font-size:clamp(15px,2.05vw,20.5px);line-height:1.6;font-weight:500}
+.feature li::before{content:"";flex:0 0 auto;width:.7em;height:.7em;margin-top:.36em;border:2px solid var(--ink);border-radius:50%;background:var(--pink)}
+.feature b{font-weight:800;font-family:var(--disp);font-size:1.02em}
+.feature li small{display:block;color:#776c5d;font-size:.85em;margin-top:.16em;font-weight:600}
+
+/* 인용 */
+.bigquote{
+  width:100%;max-width:920px;
+  font-family:var(--disp);font-weight:700;
+  font-size:clamp(17px,2.7vw,29px);line-height:1.55;
+  padding:clamp(14px,2.6vh,24px) clamp(18px,3vw,32px);
+  text-align:center;
+}
+.bigquote .pink{color:var(--pink-deep)}
+.bigquote .ref{display:block;margin-top:.6em;font-family:var(--kor);font-size:.55em;font-weight:700;color:#776c5d}
+
+/* '따라' 도식 */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.2vw,26px);width:100%;max-width:880px}
+.path{padding:clamp(12px,2vh,18px) clamp(14px,2vw,22px);text-align:left}
+.path h4{font-family:var(--disp);font-weight:700;font-size:clamp(13px,1.8vw,18px);margin-bottom:.5em;display:flex;align-items:center;gap:.5em}
+.path .dotc{width:.8em;height:.8em;border-radius:50%;border:2px solid var(--ink);display:inline-block}
+.path ul{list-style:none;display:grid;gap:.4em}
+.path li{font-size:clamp(12.5px,1.6vw,16px);font-weight:600;color:#3c352c}
+.path.old{background:#F3E3CB}
+.path.new{background:#EAD9E2}
+.path.old .dotc{background:var(--orange)}
+.path.new .dotc{background:var(--pink-deep)}
+
+/* 대조 칩 */
+.subhead{font-family:var(--disp);font-weight:700;font-size:clamp(13px,1.8vw,18px);color:var(--pink-deep);letter-spacing:.2em;margin:clamp(14px,2.6vh,24px) 0 clamp(8px,1.4vh,12px)}
+.contrast{display:flex;gap:clamp(8px,1.3vw,13px);flex-wrap:wrap;justify-content:center;width:100%}
+.chip{
+  font-size:clamp(11px,1.45vw,14.5px);font-weight:700;color:var(--ink);
+  padding:.5em 1em;border-radius:99px;background:var(--card);
+  border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+}
+.chip b{color:var(--pink-deep)}
+
+/* 2열 */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.6vw,32px);width:100%;max-width:1000px;text-align:left}
+
+/* ── HUD ─────────────────────────────────── */
+.hud{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;gap:16px;padding:14px clamp(18px,4vw,46px) 18px}
+.brand{font-family:var(--eng);font-size:10.5px;font-weight:800;letter-spacing:.26em;color:#857a69;text-transform:uppercase}
+.dots{display:flex;gap:8px;margin:0 auto}
+.dot{width:9px;height:9px;border-radius:50%;background:transparent;border:2px solid var(--ink);cursor:pointer;padding:0;transition:.25s;opacity:.45}
+.dot.on{background:var(--pink-deep);opacity:1;transform:scale(1.15)}
+.navbtn{
+  width:40px;height:40px;border-radius:50%;border:2px solid var(--ink);
+  background:var(--card);cursor:pointer;font-size:15px;font-weight:800;color:var(--ink);
+  display:grid;place-items:center;box-shadow:3px 3px 0 var(--ink);transition:.18s;
+}
+.navbtn:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.count{font-family:var(--eng);font-size:12px;font-weight:800;color:#857a69;letter-spacing:.12em;min-width:52px;text-align:right}
+.progress{position:fixed;top:0;left:0;height:5px;background:var(--pink-deep);z-index:6;transition:width .45s ease;border-radius:0 4px 4px 0}
+
+/* ── 반응형 ───────────────────────────────── */
+@media (max-width:720px){
+  .slide{justify-content:flex-start;padding-top:clamp(52px,9vh,80px);overflow-y:auto}
+  .cols,.paths{grid-template-columns:1fr}
+  .toc-item small{display:none}
+  .tbl{font-size:11.5px}
+  .tbl th,.tbl td{padding:8px 9px}
+  .tbl td:first-child{white-space:normal}
+  .brand{display:none}
+  .scripture .v{font-size:13px}
+  .decor{transform:scale(.62);transform-origin:bottom right}
+}
+@media (max-height:560px){.slide{justify-content:flex-start;padding-top:36px;overflow-y:auto}}
+</style>
+</head>
+<body>
+
+<div class="progress" id="bar"></div>
+
+<main class="deck" id="deck">
+
+  <!-- 1. 표지 -->
+  <section class="slide">
+    <!-- 장식: 표정 친구들 (우하단) -->
+    <div class="decor" aria-hidden="true">
+      <div class="shape float-big" style="--rot:-8deg;right:17vw;bottom:24vh;width:13vw;height:9.5vw;min-width:120px;min-height:88px;background:var(--green);border-radius:22%;transform:rotate(-8deg);font-size:6vw">
+        <i class="eye" style="left:28%;top:42%"></i><i class="eye" style="left:46%;top:48%"></i><b class="mouth m-o" style="left:34%;top:60%"></b>
+      </div>
+      <div class="shape float-big2" style="right:4vw;bottom:26vh;width:9vw;height:9vw;min-width:86px;min-height:86px;background:var(--yellow);clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);font-size:5.4vw">
+        <i class="eye" style="left:30%;top:40%"></i><i class="eye" style="left:58%;top:40%"></i><b class="mouth m-line" style="left:36%;top:60%"></b>
+      </div>
+      <div class="shape float-big" style="right:12.5vw;bottom:8vh;width:8.6vw;height:8.6vw;min-width:80px;min-height:80px;background:var(--pink);border-radius:50%;font-size:4.8vw">
+        <i class="eye" style="left:28%;top:36%"></i><i class="eye" style="left:58%;top:36%"></i><b class="mouth m-frown" style="left:33%;top:56%"></b>
+      </div>
+      <div class="shape" style="right:22vw;bottom:2vh;width:13vw;height:7vw;min-width:120px;min-height:64px;background:var(--blue);border-radius:12vw 12vw 0 0;font-size:6vw">
+        <i class="eye" style="left:30%;top:34%"></i><i class="eye" style="left:56%;top:34%"></i><b class="mouth m-smile" style="left:37%;top:48%"></b>
+      </div>
+      <div class="shape float-big2" style="right:7vw;bottom:9vh;width:5vw;height:5vw;min-width:46px;min-height:46px;background:var(--orange);border-radius:50%;font-size:3.4vw">
+        <i class="eye" style="left:24%;top:34%"></i><i class="eye" style="left:58%;top:34%"></i><b class="mouth m-smile" style="left:30%;top:50%"></b>
+      </div>
+      <div class="ast float-big2" style="right:26vw;bottom:47vh;width:3.4vw;height:3.4vw;min-width:32px;min-height:32px">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+      </div>
+      <div class="ast float-big" style="right:2.5vw;bottom:5vh;width:2.6vw;height:2.6vw;min-width:24px;min-height:24px">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+      </div>
+    </div>
+    <div class="inner" style="align-items:flex-start;text-align:left;max-width:1060px">
+      <span class="chiplabel rv" data-d="1">1 PETER · LEADER GUIDE 05</span>
+      <h1 class="hero rv" data-d="2">얼마나<br><span class="pink">달라야 하나</span></h1>
+      <p class="sub rv" data-d="3" style="margin-top:clamp(12px,2.2vh,20px)">베드로전서 4장 1절 — 6절</p>
+      <div class="smallquote rv" data-d="4" style="margin-top:clamp(18px,3.4vh,30px)">
+        그리스도인은 세상과 달라야 한다고들 말합니다.<br>그런데 — 얼마나, 그리고 무엇이 달라야 할까요?
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 목차 -->
+  <section class="slide">
+    <div class="ast" style="left:6vw;top:12vh;width:3vw;height:3vw;min-width:28px;min-height:28px" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+    </div>
+    <div class="inner">
+      <span class="chiplabel rv" data-d="1">CONTENTS</span>
+      <h2 class="title rv" data-d="1">오늘의 <span class="pink">흐름</span></h2>
+      <div class="toc">
+        <div class="toc-item flatcard rv" data-d="2"><span class="toc-num" style="background:var(--green)">01</span>성경 본문<small>베드로전서 4:1-6</small></div>
+        <div class="toc-item flatcard rv" data-d="2"><span class="toc-num" style="background:var(--blue)">02</span>단락 구분<small>명령은 하나</small></div>
+        <div class="toc-item flatcard rv" data-d="3"><span class="toc-num" style="background:var(--orange)">03</span>맥락<small>어디에서 이어지는 말씀인가</small></div>
+        <div class="toc-item flatcard rv" data-d="4"><span class="toc-num" style="background:var(--yellow)">04</span>구조<small>‘따라’의 본문</small></div>
+        <div class="toc-item flatcard rv" data-d="5"><span class="toc-num" style="background:var(--pink)">05</span>고난 앞에서 우리는 어떻게 달라져야 하는가<small>1절 · 시 119:71</small></div>
+        <div class="toc-item flatcard rv" data-d="6"><span class="toc-num" style="background:var(--green)">06</span>나눔 질문<small>우리의 이야기</small></div>
+        <div class="toc-item flatcard rv" data-d="7"><span class="toc-num" style="background:var(--blue)">07</span>핵심 메시지<small>한 문장</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. 성경 본문 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="chiplabel rv" data-d="1">SCRIPTURE · 개역개정</span>
+      <h2 class="title rv" data-d="1">베드로전서 <span class="pink">4:1 - 6</span></h2>
+      <div class="scripture">
+        <div class="v rv" data-d="2"><span class="vn">1</span><span>그리스도께서 이미 육체의 고난을 받으셨으니 너희도 같은 마음으로 <mark>갑옷을 삼으라</mark> 이는 육체의 고난을 받은 자는 죄를 그쳤음이니</span></div>
+        <div class="v rv" data-d="3"><span class="vn">2</span><span>그 후로는 다시 사람의 정욕을 <mark class="y">따라</mark> 살지 않고 하나님의 뜻을 <mark class="y">따라</mark> 육체의 남은 때를 살게 하려 함이라</span></div>
+        <div class="v rv" data-d="4"><span class="vn">3</span><span>너희가 음란과 정욕과 술취함과 방탕과 향락과 무법한 우상 숭배를 하여 이방인의 뜻을 <mark class="y">따라</mark> 행한 것은 지나간 때로 족하도다</span></div>
+        <div class="v rv" data-d="5"><span class="vn">4</span><span>이러므로 너희가 그들과 함께 그런 극한 방탕에 달음질하지 아니하는 것을 그들이 <mark>이상히 여겨 비방하나</mark></span></div>
+        <div class="v rv" data-d="6"><span class="vn">5</span><span>그들이 산 자와 죽은 자를 심판하기로 예비하신 이에게 사실대로 고하리라</span></div>
+        <div class="v rv" data-d="7"><span class="vn">6</span><span>이를 위하여 죽은 자들에게도 복음이 전파되었으니 이는 육체로는 사람으로 심판을 받으나 영으로는 하나님을 <mark class="y">따라</mark> 살게 하려 함이라</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. 단락 구분 -->
+  <section class="slide" style="justify-content:flex-start;padding-top:clamp(48px,8vh,80px);overflow-y:auto">
+    <div class="inner">
+      <span class="chiplabel rv" data-d="1">OUTLINE</span>
+      <h2 class="title rv" data-d="1" style="margin-bottom:clamp(10px,2vh,18px)">단락 <span class="pink">구분</span></h2>
+
+      <!-- 본문 풀텍스트 + 단락 분할 -->
+      <div class="parsed rv" data-d="2">
+        <div class="pgroup" style="border-left-color:var(--green)">
+          <div class="phead"><span class="vbadge" style="background:var(--green)">1 - 2절</span><span class="pttl">무장 명령</span></div>
+          <div class="ptext"><span class="vn">1</span>그리스도께서 이미 육체의 고난을 받으셨으니 너희도 같은 마음으로 <mark>갑옷을 삼으라</mark> 이는 육체의 고난을 받은 자는 죄를 그쳤음이니 <span class="vn">2</span>그 후로는 다시 사람의 정욕을 <mark class="y">따라</mark> 살지 않고 하나님의 뜻을 <mark class="y">따라</mark> 육체의 남은 때를 살게 하려 함이라</div>
+        </div>
+        <div class="pgroup" style="border-left-color:var(--blue)">
+          <div class="phead"><span class="vbadge" style="background:var(--blue)">3절</span><span class="pttl">지나간 때의 목록</span></div>
+          <div class="ptext"><span class="vn">3</span>너희가 음란과 정욕과 술취함과 방탕과 향락과 무법한 우상 숭배를 하여 이방인의 뜻을 <mark class="y">따라</mark> 행한 것은 지나간 때로 족하도다</div>
+        </div>
+        <div class="pgroup" style="border-left-color:var(--orange)">
+          <div class="phead"><span class="vbadge" style="background:var(--orange)">4 - 5절</span><span class="pttl">세상의 반응과 심판</span></div>
+          <div class="ptext"><span class="vn">4</span>이러므로 너희가 그들과 함께 그런 극한 방탕에 달음질하지 아니하는 것을 그들이 <mark>이상히 여겨 비방하나</mark> <span class="vn">5</span>그들이 산 자와 죽은 자를 심판하기로 예비하신 이에게 사실대로 고하리라</div>
+        </div>
+        <div class="pgroup" style="border-left-color:var(--pink-deep)">
+          <div class="phead"><span class="vbadge" style="background:var(--pink-deep)">6절</span><span class="pttl">복음이 전파된 목적</span></div>
+          <div class="ptext"><span class="vn">6</span>이를 위하여 죽은 자들에게도 복음이 전파되었으니 이는 육체로는 사람으로 심판을 받으나 영으로는 하나님을 <mark class="y">따라</mark> 살게 하려 함이라</div>
+        </div>
+      </div>
+
+      <!-- 기존 단락 구분 표 -->
+      <div class="flatcard rv" data-d="3" style="width:100%;max-width:1000px;overflow:hidden;margin-top:clamp(12px,2.4vh,22px)">
+        <table class="tbl tbl4">
+          <thead><tr><th>구분</th><th>단락 제목</th><th>핵심 내용</th></tr></thead>
+          <tbody>
+            <tr><td><span class="vbadge" style="background:var(--green)">1 - 2절</span></td><td class="ttl">무장 명령</td><td class="desc">그리스도의 고난을 근거로, 같은 마음으로 무장하라 — 남은 때를 하나님의 뜻을 따라</td></tr>
+            <tr><td><span class="vbadge" style="background:var(--blue)">3절</span></td><td class="ttl">지나간 때의 목록</td><td class="desc">이방인의 뜻을 따라 행한 여섯 가지 — “지나간 때로 족하도다”</td></tr>
+            <tr><td><span class="vbadge" style="background:var(--orange)">4 - 5절</span></td><td class="ttl">세상의 반응과 심판</td><td class="desc">달라진 너희를 이상히 여겨 비방하나, 그들은 심판자 앞에 서리라</td></tr>
+            <tr><td><span class="vbadge" style="background:var(--pink-deep)">6절</span></td><td class="ttl">복음이 전파된 목적</td><td class="desc">육체로는 심판을 받으나, 영으로는 하나님을 따라 살게 하려 함</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 맥락 -->
+  <section class="slide">
+    <div class="ast" style="right:7vw;top:13vh;width:3vw;height:3vw;min-width:28px;min-height:28px" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+    </div>
+    <div class="inner">
+      <span class="chiplabel rv" data-d="1">CONTEXT</span>
+      <h2 class="title rv" data-d="1">어디에서 <span class="pink">이어지는</span> 말씀인가</h2>
+      <ul class="feature">
+        <li class="rv" data-d="2"><span><b>직전 본문과의 연결</b> — “그리스도께서 이미 육체의 고난을 받으셨으니”(4:1)<small>4과에서 본 3:18-22(승리하신 그리스도)를 ‘이미’ 한 단어로 이어받음 — 교리에서 실천으로</small></span></li>
+        <li class="rv" data-d="3"><span><b>수신자</b> — 소아시아에 흩어진 나그네 성도들<small>달라진 삶 때문에 실제로 비방받고 있던 사람들</small></span></li>
+        <li class="rv" data-d="4"><span><b>3절 목록의 배경</b> — 그레코-로만 사회의 연회·축제·동업조합 문화<small>우상숭배와 결합된 사회생활 전반 — 빠지면 곧 관계의 단절</small></span></li>
+        <li class="rv" data-d="5"><span><b>‘이상히 여김’(4절)</b> — 과장이 아니라 실제 사회 현상<small>모임에 빠지는 신자들은 ‘반사회적인 사람들’로 손가락질받음</small></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 6. 구조 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="chiplabel rv" data-d="1">STRUCTURE</span>
+      <h2 class="title rv" data-d="1">‘따라’의 <span class="pink">본문</span></h2>
+      <div class="bigquote flatcard rv" data-d="2" style="font-size:clamp(13px,1.9vw,19px);padding:clamp(10px,2vh,16px)">
+        <span class="pink">1)</span> 근거(그리스도의 고난, 1절) → <span class="pink">2)</span> 명령(같은 마음으로 무장) → <span class="pink">3)</span> 목적(남은 때를 하나님의 뜻을 따라, 2절)
+      </div>
+      <div class="paths rv" data-d="3" style="margin-top:clamp(12px,2.4vh,22px)">
+        <div class="path old flatcard">
+          <h4><span class="dotc"></span>옛 길</h4>
+          <ul>
+            <li>사람의 정욕을 따라 (2절)</li>
+            <li>이방인의 뜻을 따라 (3절)</li>
+          </ul>
+        </div>
+        <div class="path new flatcard">
+          <h4><span class="dotc"></span>새 길</h4>
+          <ul>
+            <li>하나님의 뜻을 따라 (2절)</li>
+            <li>하나님을 따라 (6절)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="subhead rv" data-d="4">대조</div>
+      <div class="contrast rv" data-d="5">
+        <span class="chip">지나간 때 <b>↔</b> 남은 때 (2-3절)</span>
+        <span class="chip">너희 <b>↔</b> 그들 (4-5절)</span>
+        <span class="chip">육체로는 심판 <b>↔</b> 영으로는 삶 (6절)</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. 고난 앞에서 -->
+  <section class="slide">
+    <div class="inner">
+      <span class="chiplabel k rv" data-d="1">교재 1번 지문</span>
+      <h2 class="title rv" data-d="1" style="font-size:clamp(20px,3.6vw,40px)">고난 앞에서 우리는<br>어떻게 <span class="pink">달라져야</span> 하는가</h2>
+      <div class="cols">
+        <div class="rv" data-d="2">
+          <div class="bigquote flatcard" style="font-size:clamp(13.5px,1.8vw,19px);text-align:left">
+            “너희도 같은 마음으로 <span class="pink">갑옷을 삼으라</span> 이는 육체의 고난을 받은 자는 죄를 그쳤음이니”
+            <span class="ref">베드로전서 4:1</span>
+          </div>
+        </div>
+        <div class="rv" data-d="3">
+          <div class="bigquote flatcard" style="font-size:clamp(13.5px,1.8vw,19px);text-align:left;background:#EAD9E2">
+            “<span class="pink">고난 당한 것이 내게 유익이라</span> 이로 말미암아 내가 주의 율례들을 배우게 되었나이다”
+            <span class="ref">시편 119:71</span>
+          </div>
+        </div>
+      </div>
+      <ul class="numlist rv" data-d="4" style="margin-top:clamp(16px,3vh,28px)">
+        <li><span class="n">1</span><span>고난 당하셨던 예수 그리스도와 같은 마음을 품으라.</span></li>
+        <li><span class="n">2</span><span>고난은 재앙이 아니라 죄와 결별하게 하는 하나님의 도구다.</span></li>
+        <li><span class="n">3</span><span>고난은 하나님의 말씀을 배우게 하는 체험형 교실이다.</span></li>
+        <li><span class="n">4</span><span>내가 잘될 때 듣지 못하던 주님의 음성을 고난 속에 듣게 된다.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8. 나눔 질문 -->
+  <section class="slide">
+    <!-- 장식: 궁금한 얼굴 -->
+    <div class="shape float-soft" style="--rot:6deg;right:6vw;bottom:14vh;width:8vw;height:8vw;min-width:74px;min-height:74px;background:var(--yellow);clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%);font-size:4.6vw" aria-hidden="true">
+      <i class="eye" style="left:30%;top:40%"></i><i class="eye" style="left:58%;top:40%"></i><b class="mouth m-o" style="left:40%;top:58%"></b>
+    </div>
+    <div class="ast" style="left:7vw;bottom:18vh;width:3vw;height:3vw;min-width:26px;min-height:26px" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+    </div>
+    <div class="inner">
+      <span class="chiplabel k rv" data-d="1">나눔 질문</span>
+      <div class="bigquote flatcard rv" data-d="2" style="font-size:clamp(17px,2.8vw,30px)">
+        믿음 때문에 세상의 상식과 방법대로 선택하지 않고<br>
+        다르게 선택했을 때, 주변에서 <span class="pink">“쟤 왜 저래?”</span>라는<br>
+        시선이나 말을 들어 본 적이 있나요?<br>
+        <span style="font-size:.78em">그때 어떤 마음이 들었나요?</span>
+      </div>
+      <p class="sub rv" data-d="3" style="margin-top:clamp(14px,2.8vh,24px)">
+        정답이 없는 질문입니다 — 경험이 없다면 <b style="color:var(--ink)">‘달라지기가 어려웠던 순간’</b>을 나눠도 좋습니다.
+      </p>
+    </div>
+  </section>
+
+  <!-- 9. 핵심 메시지 -->
+  <section class="slide">
+    <div class="ast float-soft" style="left:9vw;top:16vh;width:3.2vw;height:3.2vw;min-width:30px;min-height:30px" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+    </div>
+    <div class="ast" style="right:8vw;bottom:16vh;width:2.6vw;height:2.6vw;min-width:24px;min-height:24px" aria-hidden="true">
+      <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"><path d="M20 4v32M6 12l28 16M34 12L6 28"/></svg>
+    </div>
+    <div class="inner">
+      <span class="chiplabel rv" data-d="1">THE MESSAGE</span>
+      <div class="bigquote rv" data-d="2" style="font-size:clamp(19px,3.3vw,36px)">
+        달라짐의 핵심은 <span class="pink">‘무엇을 따라 사는가’</span>의 전환이다.<br>
+        사람의 정욕과 이방인의 뜻에서,<br>
+        하나님의 뜻으로.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<nav class="hud">
+  <span class="brand">1 Peter · Lesson 05</span>
+  <div class="dots" id="dots"></div>
+  <button class="navbtn" id="prev" aria-label="이전">←</button>
+  <button class="navbtn" id="next" aria-label="다음">→</button>
+  <span class="count" id="count">1 / 9</span>
+</nav>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const dotsBox=document.getElementById('dots');
+const bar=document.getElementById('bar');
+const count=document.getElementById('count');
+let cur=0;
+slides.forEach((_,i)=>{
+  const d=document.createElement('button');
+  d.className='dot';d.setAttribute('aria-label','슬라이드 '+(i+1));
+  d.onclick=()=>go(i);
+  dotsBox.appendChild(d);
+});
+const dots=[...dotsBox.children];
+function go(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  dots.forEach((d,k)=>d.classList.toggle('on',k===cur));
+  bar.style.width=((cur+1)/slides.length*100)+'%';
+  count.textContent=(cur+1)+' / '+slides.length;
+}
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(cur+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1)}
+  if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+});
+let tx=0,ty=0;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>56&&Math.abs(dx)>Math.abs(dy)*1.4) go(cur+(dx<0?1:-1));
+},{passive:true});
+go(0);
+</script>
+</body>
+</html>
